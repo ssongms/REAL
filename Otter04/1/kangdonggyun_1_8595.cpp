@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-	string input;       //입력할 단어
+	string input;       //입력할 단어 
 	int length;			//입력할 단어의 총 길이
 	long long int sum = 0;		//히든 넘버의 합을 저장
 	string temp_save;   //각 히든넘버를 임시적으로 저장하기 위한 변수
