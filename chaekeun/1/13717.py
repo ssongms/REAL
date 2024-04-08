@@ -42,6 +42,6 @@ for i in range(n):
         maxEvol = evol
         # 가장 많이 진화한 이번 회차의 포켓몬 이름 저장
         ans2 = p
-
+2448.py
 print(ans1)
 print(ans2)
