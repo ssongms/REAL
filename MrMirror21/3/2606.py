@@ -12,7 +12,7 @@ for i in range(connections): # 컴퓨터 간 연결 관계를 입력 받아 conn
     connectionList[a].append(b)
     connectionList[b].append(a)
 
-def DFS(infected):
+def BFS(infected):
     count = 0
     visited[infected] = 1 # 감염된 현재 컴퓨터를 방문 표시
     queue = [infected] # 방문해야 할 컴퓨터 번호를 저장할 큐
@@ -22,6 +22,7 @@ def DFS(infected):
                 visited[i] = 1 # 방문 표시
                 queue.insert(0, i) # 방문하지 않은 컴퓨터를 큐의 맨 앞에 추가
                 count += 1 # 감염된 컴퓨터 개수 증가
+                print(i)
     return count
 
-print(DFS(1)) # 1번 컴퓨터를 감염시킨 후 결과 출력
+print(BFS(1)) # 1번 컴퓨터를 감염시킨 후 결과 출력
