@@ -24,7 +24,7 @@ int main()
 	}
 
 
-	for (int i = counter - 2; i > -1; i--)
+	for (int i = counter - 2; i > -1; i--) // 선행 Array부터 조정하면 후행 Array가 수정될경우 선행 Array가 후행 Array보다 커지는 일이 발생할 수 있으므로 index가 큰 순서대로 처리해준다.
 	{
 		if (levels[i] >= levels[i + 1])
 		{
