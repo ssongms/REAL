@@ -17,4 +17,3 @@ for i in range(0, len(poketmonList), 2): # 각 포켓몬당 두 번의 입력을
 
 print(totalEvolution)
 print(poketmonList[evolutionList.index(max(evolutionList)) * 2])
-

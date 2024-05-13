@@ -82,7 +82,13 @@
 <br/>
 
 ## ⚠️ commit 컨벤션
+### Initial Commit
 ```
 "N주차"
+```
+### Additinal Commit
+```
+"N주차 (수정한 내용)"
+예시 : 1주차 (777.py 코드 수정)
 ```
 
