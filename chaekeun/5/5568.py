@@ -14,6 +14,5 @@ for p in permutations(a, k):
         temp += str(elem)
     ans.append(temp)
 
-
 cnt = len(set(ans))
 print(cnt)
