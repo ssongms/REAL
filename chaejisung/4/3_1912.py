@@ -15,5 +15,3 @@ for i in range(0, n):
     #print(seq[i], max_sum[i-1]+seq[i])
 
 print(max(max_sum))
-
-
