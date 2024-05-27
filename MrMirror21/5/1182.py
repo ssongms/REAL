@@ -14,7 +14,6 @@ def getSum(start):
   global count
   if sum(testArr) == target and len(testArr) > 0: # 부분수열의 합이 target을 충족시켰을 때
     count += 1
-
   for i in range(start, num): # 호출된 지점부터 끝까지 정수들을 입력하고 비교하고 제거하며 target을 만족하는 부분수열을 체크
     testArr.append(numbersList[i])
     getSum(i+1)
