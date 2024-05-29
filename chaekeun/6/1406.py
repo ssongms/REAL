@@ -56,32 +56,32 @@ input = stdin.readline
 
 # print(''.join(str_list))
 
-# 커서를 기준으로 문자열을 스택 두개에 나누어 담는 풀이
-from sys import stdin
-input = stdin.readline
+# # 커서를 기준으로 문자열을 스택 두개에 나누어 담는 풀이
+# from sys import stdin
+# input = stdin.readline
 
-st1 = list(input().strip())
-st2 = []
+# st1 = list(input().strip())
+# st2 = []
 
-for _ in range(int(input())):
-	cmd = list(input().split())
-	if cmd[0] == 'L':
-		if st1:
-			st2.append(st1.pop())
+# for _ in range(int(input())):
+# 	cmd = list(input().split())
+# 	if cmd[0] == 'L':
+# 		if st1:
+# 			st2.append(st1.pop())
 
-		elif cmd[0] == 'D':
-			if st2:
-				st1.append(st2.pop())
+# 		elif cmd[0] == 'D':
+# 			if st2:
+# 				st1.append(st2.pop())
 
-		elif cmd[0] == 'B':
-			if st1:
-				st1.pop()
+# 		elif cmd[0] == 'B':
+# 			if st1:
+# 				st1.pop()
 
-		else:
-			st1.append(cmd[1])
+# 		else:
+# 			st1.append(cmd[1])
 
-st1.extend(reversed(st2))
-print("".join(st1))
+# st1.extend(reversed(st2))
+# print("".join(st1))
 
 
 #Linked list로 푼 풀이
@@ -91,72 +91,119 @@ cmdLen = int(input())
 
 # 노드 클래스 : 노드의 값과 next, prev의 값을 가진다
 class Node:
-	def __init(self, value = None):
-		self.value = value
-		self.prev = None
-		self.next = None
+	def __init__(self, data, prev = None, next = None):
+        self.data = data
+        self.prev = prev
+        self.next = next
 
 class DLinkedList:
-	def __init__(self, data):
-		self.head = Node()
-		self.tail = self.head
-
-	def insert(self, data):
-		if self.head == None:
-			self.head = Node(data)
-			self.tail = self.head
+	def __init__(self):
+		self.head = Node(None)
+		self.tail = Node(None, self.head)
+		self.head.next = self.tail
+		self.size = 0
+	
+	def is_empty(self):
+		if self.size != 0:
+			return False
 		else:
-			node = self.head
-			while node.next:
-				node = node.next
-			new = Node(data, prev=node)
-			node.next = new
-			self.tail = new
-
-	def desc(self):
-		node = self.head
-		while node:
-			print(node.data)
-			node = node.next
-
-	def insert_before(self, next_data, new_data):
-		if self.head is None:
-			self.head = Node(new_data)
-			self.tail = self.head
 			return True
-		else:
-			node = self.tail
-			while node.data != next_data: # 넣을 위치를 찾는다
-				node = node.prev
-				if node == None: # head node이면
-					return False
 
-			prev_node = node.prev
-			new_node = Node(new_data, prev=prev_node, next=node)
-			if prev_node:
-				prev_node.next = new_node
+	def selectNode(self, idx):
+		if idx > self.size:
+			print("Overflow: Index Error")
+			return None
+		if idx == 0:
+			return self.head
+		if idx = self.size:
+			return self.tail # = Null?
+		if idx <= self.size // 2: 
+			target = self.head
+			for _ range(idx): # head에서 시작해서 내려가며 찾는다.
+				target = target.next
+			return target
+		else:
+			target = self.tail
+			for _ in range(self.size - idx): # tail에서 시작해서 올라가며 찾는다.
+				target = target.prev
+			return target
+
+	def appendLeft(self, value):
+		# 이 코드가 중복되는데 어떻게 안되나 ㅠ
+		if self.is_empty():
+			self.head = Node(value)
+			self.tail = Node(None, self.head)
+			self.head.next = self.tail
+		else:
+			tmp = self.head
+			# 새로운 head를 만들고 next에 기존 head 연결
+			self.head = Node(value, None, self.head)
+			tmp.prev = self.head
+		self.size += 1
+
+	def append(self, value):
+		if self.is_empty():
+			self.head = Node(value)
+			self.tail = Node(None, self.head)
+			self.head.next = self.tail
+		else:
+			tmp = self.tail.prev
+			# 왜 self.tail과 그 이전노드 사이에 새로운걸 집어넣는지 모르겠다. 개념이 부족한건가?
+			newNode = Node(value, tmp, self.tail)	
+			tmp.next = newNode
+			self.tail.prev = newNode
+
+		self.size += 1
+
+    def insert(self, value, idx):
+        if self.is_empty():
+            self.head = Node(value)
+            self.tail = Node(None, self.head)
+            self.head.next = self.tail
+		else:
+			tmp = self.selectNode(idx)
+			if tmp == None:
+				return
+			if tmp == self.head:
+				self.appendLeft(value)
+			elif tmp == self.tail: # 이부분 체크
+				self.append(value)
 			else:
-				self.head = new_node
-			node.prev = new_node
-			return True
+				tmp_prev = tmp.prev
+				newNode = Node(value, tmp_prev, tmp)
+				tmp_prev.next = newNode
+				tmp.prev = newNode
+		self.size += 1
 
-	def insert_after(self, before_data, new_data):
-		if self.head is Node:
-			self.head = Node(new_data)
-			self.tail = self.head
-			return True
-
+	def delete(self, idx):
+		if self.is_empty():
+			print("Underflow Error")
+			return
 		else:
-			node = self.head
-			while node.data != before_data:
-				node = node.next
-				if node == None:
-					return False
-			next_node = node.next
-			new_node = Node(new_data, prev=node, next=next_node)
-			if next_node:
-				next_node.prev = new_node
+			tmp = self.selectNode(idx)
+			# 삭제한 척 LL에서 분리해버린다.
+			if tmp == None:
+				return
+			elif tmp == self.head:
+				tmp = self.head
+				self.head = self.head.next
+			elif tmp == self.tail:
+				tmp = self.tail
+				self.tail = self.tail.prev
 			else:
-				self.tail = new_node
-			node.next = new_node
+				tmp.prev.next = tmp.next
+				tmp.next.prev = tmp.prev
+			# 진짜로 컴퓨터에서 삭제해버리는 delete
+			del(tmp)
+			self.size -= 1
+
+	def printlist(self):
+		target = self.head
+		while target != self.tail:
+			if target.next != self.tail:
+				print(target.data, '<=> ', end='')
+			else:
+				print(target.data)
+			target = target.next
+			
 
