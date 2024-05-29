@@ -8,3 +8,5 @@
 *.opendb
 *.opensdf
 .vs/
+
+# Ignore files
